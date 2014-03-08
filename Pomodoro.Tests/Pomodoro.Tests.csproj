@@ -44,10 +44,16 @@
   <ItemGroup>
     <Compile Include="NUnitPractice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Timer.cs" />
+    <Compile Include="TimerDuration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pomodoro\Pomodoro.csproj">
+      <Project>{4f519df7-b63c-4b94-8102-5ed1b61d0009}</Project>
+      <Name>Pomodoro</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Pomodoro.Tests
 {
-    [TestFixture]
+    //[TestFixture] // Intentionally removed
     class NUnitPractice
     {
         [Test]
