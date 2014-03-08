@@ -10,10 +10,11 @@ namespace Pomodoro.Model
     public class WorkStartedHandlerArgs : EventArgs {}
 
     public delegate void ClockRunningHandler(object sender, ClockRunningHandlerArgs e);
+
     public class ClockRunningHandlerArgs : EventArgs 
     {
-        int Elapsed_ms { get; set; }
-        int Remaining_ms { get; set; }
+        public int Elapsed_ms { get; set; }
+        public int Remaining_ms { get; set; }
     }
 
     public interface IClock
@@ -28,6 +29,7 @@ namespace Pomodoro.Model
 
         event WorkStartedHandler WorkStarted;
         event ClockRunningHandler Working;
+        event EventHandler Stopped;
     }
 
     public enum Mode

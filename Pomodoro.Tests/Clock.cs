@@ -19,10 +19,9 @@ namespace Pomodoro.Tests
         [SetUp]
         public void SetUp()
         {
-            _testDuration = new ClockDuration(_testTimeSpan_2ms,
-                                                            _testTimeSpan_2ms,
-                                                            _testTimeSpan_2ms);
-
+            _testDuration = new ClockDuration(  workDuration: _testTimeSpan_2ms, 
+                                                shortBreak: _testTimeSpan_2ms,
+                                                longBreak: _testTimeSpan_2ms);
         }
 
         [Test]
@@ -127,6 +126,53 @@ namespace Pomodoro.Tests
 
             DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
             Assert.AreEqual(2, eventCount);
+        }
+
+        [Test]
+        public void WorkingEvent_ShouldProvide_ElapsedAndRemainingTime()
+        {
+            int elapsed_ms = 0;
+            int remaining_ms = 0;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // WorkDuration = 2ms
+
+                bool firstTime = true;
+                clock.Working += (sender, e) =>
+                {
+                    if (firstTime)
+                    {
+                        firstTime = false;
+
+                        elapsed_ms = e.Elapsed_ms;
+                        remaining_ms = e.Remaining_ms;
+                    }
+                };
+
+                clock.StartWork();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.AreEqual(1, elapsed_ms);
+            Assert.AreEqual((int)_testDuration.WorkDuration.TotalMilliseconds - elapsed_ms, remaining_ms);
+        }
+
+
+        [Test]
+        public void RaiseStoppedEvent_AfterWorkDurationElapsed()
+        {
+            bool eventRaised = false;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // WorkDuration = 2ms
+                clock.Stopped += (sender, e) => { eventRaised = true; };
+                clock.StartWork();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.IsTrue(eventRaised);
         }
     }
 }

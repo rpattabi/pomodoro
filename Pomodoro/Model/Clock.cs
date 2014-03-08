@@ -49,8 +49,10 @@ namespace Pomodoro.Model
         public void Stop()
         {
             EndHourglassTimer();
-
             this.Mode = Mode.Idle;
+
+            if (Stopped != null)
+                Stopped(this, new EventArgs());
         }
 
         private void SetupHourglassTimer(TimeSpan duration)
@@ -71,7 +73,6 @@ namespace Pomodoro.Model
             if (_runningHourglassTimer != null)
             {
                 _runningHourglassTimer.Stop();
-                _runningHourglassTimer.Dispose();
                 _runningHourglassTimer = null;
             }
         }
@@ -83,8 +84,15 @@ namespace Pomodoro.Model
                 case Mode.Idle:
                     break;
                 case Mode.Work:
-                    if (Working != null)
-                        Working(this, new ClockRunningHandlerArgs());
+                    if (Working == null) break;
+
+                    var clockingRunningEventArgs = new ClockRunningHandlerArgs()
+                    {
+                        Elapsed_ms = e.Elapsed_ms,
+                        Remaining_ms = (int)this.Duration.WorkDuration.TotalMilliseconds - e.Elapsed_ms
+                    };
+
+                    Working(this, clockingRunningEventArgs);
                     break;
                 case Mode.ShortBreak:
                     break;
@@ -95,11 +103,13 @@ namespace Pomodoro.Model
             }
         }
 
-        void _hourglassTimer_Stopped(object sender)
+        void _hourglassTimer_Stopped(object sender, EventArgs e)
         {
+            Stop();
         }
 
         public event WorkStartedHandler WorkStarted;
         public event ClockRunningHandler Working;
+        public event EventHandler Stopped;
     }
 }
