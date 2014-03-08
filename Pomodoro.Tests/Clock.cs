@@ -125,7 +125,7 @@ namespace Pomodoro.Tests
                 clock.StartWork();
             };
 
-            DispatcherHelper.ExecuteOnDispatcherThread(test);
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
             Assert.AreEqual(2, eventCount);
         }
     }

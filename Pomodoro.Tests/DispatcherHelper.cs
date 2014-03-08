@@ -29,13 +29,13 @@ public static class DispatcherHelper
     /// Executes the on dispatcher thread.
     /// </summary>
     /// <param name="test">The test method.</param>
-    /// <param name="secondsToWait">The seconds to wait.</param>
-    public static void ExecuteOnDispatcherThread(Action test, int secondsToWait = 5)
+    /// <param name="millisecondsToWait">The seconds to wait.</param>
+    public static void ExecuteOnDispatcherThread(Action test, int millisecondsToWait = 1000)
     {
         Action dispatch = () =>
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, test);
-            StartTimer(secondsToWait, Dispatcher.CurrentDispatcher);
+            StartTimer(millisecondsToWait, Dispatcher.CurrentDispatcher);
 
             Dispatcher.Run();
         };
@@ -64,11 +64,11 @@ public static class DispatcherHelper
     /// <summary>
     /// Starts the timer.
     /// </summary>
-    /// <param name="secondsToWait">The seconds to wait.</param>
+    /// <param name="millisecondsToWait">The seconds to wait.</param>
     /// <param name="dispatcher">The dispatcher.</param>
-    private static void StartTimer(int secondsToWait, Dispatcher dispatcher)
+    private static void StartTimer(int millisecondsToWait, Dispatcher dispatcher)
     {
-        var timeToWait = TimeSpan.FromSeconds(secondsToWait);
+        var timeToWait = TimeSpan.FromMilliseconds(millisecondsToWait);
         var timer = new DispatcherTimer(timeToWait, DispatcherPriority.ApplicationIdle, stop, dispatcher);
         timer.Start();
     }
