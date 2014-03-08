@@ -12,12 +12,17 @@ namespace Pomodoro.Tests
     [TestFixture]
     class Clock
     {
-        private TimeSpan _testDuration_2ms = new TimeSpan(  days: 0, hours: 0, minutes: 0, seconds: 0, 
-                                                        milliseconds: 2);
+        private TimeSpan _testTimeSpan_2ms = TimeSpan.FromMilliseconds(2);
+
+        private IClockDuration _testDuration;
 
         [SetUp]
         public void SetUp()
         {
+            _testDuration = new ClockDuration(_testTimeSpan_2ms,
+                                                            _testTimeSpan_2ms,
+                                                            _testTimeSpan_2ms);
+
         }
 
         [Test]
@@ -96,10 +101,7 @@ namespace Pomodoro.Tests
         [Test]
         public void RaiseWorkStartedEvent_OnStartingWork()
         {
-            IClockDuration duration = new ClockDuration(_testDuration_2ms,
-                                                        _testDuration_2ms,
-                                                        _testDuration_2ms);
-            IClock clock = new Pomodoro.Model.Clock(duration);
+            IClock clock = new Pomodoro.Model.Clock(_testDuration);
 
             bool eventReceived = false;
             clock.WorkStarted += (sender, e) =>
@@ -109,6 +111,22 @@ namespace Pomodoro.Tests
 
             clock.StartWork();
             Assert.IsTrue(eventReceived);
+        }
+
+        [Test]
+        public void RaiseWorkingEvent_EveryMillisecond_OnStartingWork()
+        {
+            IClock clock = new Pomodoro.Model.Clock(_testDuration); // WorkDuration = 2ms
+
+            int eventCount = 0;
+            clock.Working += (sender, e) =>
+                {
+                    eventCount++;
+                };
+
+            clock.StartWork();
+            System.Threading.Thread.Sleep(50); // milliseconds
+            Assert.AreEqual(2, eventCount);
         }
     }
 }

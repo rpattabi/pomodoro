@@ -70,6 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\HourglassTimer.cs" />
     <Compile Include="Model\IClock.cs" />
     <Compile Include="Model\IClockDuration.cs" />
     <Compile Include="Model\Clock.cs" />

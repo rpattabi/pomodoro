@@ -21,26 +21,19 @@ namespace Pomodoro.Model
             }
         }
 
-        public class FixedDuration
-        {
-            public static TimeSpan TwentyFive = new TimeSpan(hours: 0, minutes: 25, seconds: 0);
-            public static TimeSpan Five = new TimeSpan(hours: 0, minutes: 5, seconds: 0);
-            public static TimeSpan Fifteen = new TimeSpan(hours: 0, minutes: 15, seconds: 0);
-        }
-
         public ClockDuration()
-            : this( FixedDuration.TwentyFive,
-                    FixedDuration.Five,
-                    FixedDuration.Fifteen)
+            : this( TimeSpan.FromMinutes(25),
+                    TimeSpan.FromMinutes(5),
+                    TimeSpan.FromMinutes(15))
         {
         }
                                 
         public ClockDuration(   int workDuration_minutes, 
                                 int shortBreak_minutes, 
                                 int longBreak_minutes)
-            : this( new TimeSpan(hours: 0, minutes: workDuration_minutes, seconds: 0),
-                    new TimeSpan(hours: 0, minutes: shortBreak_minutes, seconds: 0),
-                    new TimeSpan(hours: 0, minutes: longBreak_minutes, seconds: 0))
+            : this( TimeSpan.FromMinutes(workDuration_minutes),
+                    TimeSpan.FromMinutes(shortBreak_minutes),
+                    TimeSpan.FromMinutes(longBreak_minutes))
         {
         }
 
@@ -54,7 +47,5 @@ namespace Pomodoro.Model
         public TimeSpan WorkDuration { get; set; }
         public TimeSpan ShortBreak { get; set; }
         public TimeSpan LongBreak { get; set; }
-
-
     }
 }
