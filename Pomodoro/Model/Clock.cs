@@ -9,17 +9,17 @@ namespace Pomodoro.Model
     public class Clock : IClock
     {
         public Clock()
-            : this(TimerDuration.Default)
+            : this(ClockDuration.Default)
         {
         }
 
-        public Clock(ITimerDuration duration)
+        public Clock(IClockDuration duration)
         {
             this.Duration = duration;
             this.Mode = Mode.Idle;
         }
 
-        public ITimerDuration Duration { get; set; }
+        public IClockDuration Duration { get; set; }
         public Mode Mode { get; private set; }
 
         public void StartWork()

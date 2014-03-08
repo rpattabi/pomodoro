@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodoro.Model
 {
-    public interface ITimerDuration
+    public interface IClockDuration
     {
         TimeSpan WorkDuration { get; set; }
         TimeSpan ShortBreak { get; set; }

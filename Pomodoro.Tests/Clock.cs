@@ -13,16 +13,16 @@ namespace Pomodoro.Tests
     class Clock
     {
         [Test]
-        public void DefaultDuration_ShouldBe_DefaultOfTimerDuration()
+        public void DefaultDuration_ShouldBe_DefaultOfClockDuration()
         {
             IClock clock = new Pomodoro.Model.Clock();
-            Assert.AreSame(TimerDuration.Default, clock.Duration);
+            Assert.AreSame(ClockDuration.Default, clock.Duration);
         }
 
         [Test]
         public void OverridingDuration_Allowed_DuringConstruction()
         {
-            ITimerDuration duration = new TimerDuration(workDuration: 20, shortBreak: 4, longBreak: 10);
+            IClockDuration duration = new ClockDuration(workDuration: 20, shortBreak: 4, longBreak: 10);
             IClock clock = new Pomodoro.Model.Clock(duration);
 
             Assert.AreSame(duration, clock.Duration);

@@ -8,7 +8,7 @@ namespace Pomodoro.Model
 {
     public interface IClock
     {
-        ITimerDuration Duration { get; set; }
+        IClockDuration Duration { get; set; }
         Mode Mode { get; }
 
         void StartWork();

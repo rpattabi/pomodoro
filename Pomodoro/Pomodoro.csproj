@@ -71,9 +71,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\IClock.cs" />
-    <Compile Include="Model\ITimerDuration.cs" />
+    <Compile Include="Model\IClockDuration.cs" />
     <Compile Include="Model\Clock.cs" />
-    <Compile Include="Model\TimerDuration.cs" />
+    <Compile Include="Model\ClockDuration.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">

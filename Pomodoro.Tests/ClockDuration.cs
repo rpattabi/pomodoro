@@ -10,12 +10,12 @@ using Pomodoro.Model;
 namespace Pomodoro.Tests.Model
 {
     [TestFixture]
-    class TimerDuration
+    class ClockDuration
     {
         [Test]
         public void Defaults_ShouldBe_25_5_15()
         {
-            ITimerDuration duration = new Pomodoro.Model.TimerDuration();
+            IClockDuration duration = new Pomodoro.Model.ClockDuration();
 
             Assert.AreEqual(25, duration.WorkDuration.Minutes);
             Assert.AreEqual(5, duration.ShortBreak.Minutes);
@@ -25,7 +25,7 @@ namespace Pomodoro.Tests.Model
         [Test]
         public void OverridingDefaults_Allowed_AtConstruction()
         {
-            ITimerDuration duration = new Pomodoro.Model.TimerDuration(workDuration: 20,
+            IClockDuration duration = new Pomodoro.Model.ClockDuration(workDuration: 20,
                                                     shortBreak: 4,
                                                     longBreak: 25);
 
@@ -37,7 +37,7 @@ namespace Pomodoro.Tests.Model
         [Test]
         public void RevisingAnyDuration_Allowed()
         {
-            ITimerDuration duration = new Pomodoro.Model.TimerDuration();
+            IClockDuration duration = new Pomodoro.Model.ClockDuration();
 
             duration.WorkDuration = new TimeSpan(hours: 0, minutes: 30, seconds: 0);
             Assert.AreEqual(30, duration.WorkDuration.Minutes);
@@ -52,7 +52,7 @@ namespace Pomodoro.Tests.Model
         [Test]
         public void DefaultInstance_ShouldHave_25_5_15()
         {
-            ITimerDuration defaultDuration = Pomodoro.Model.TimerDuration.Default;
+            IClockDuration defaultDuration = Pomodoro.Model.ClockDuration.Default;
 
             Assert.AreEqual(25, defaultDuration.WorkDuration.Minutes);
             Assert.AreEqual(5, defaultDuration.ShortBreak.Minutes);

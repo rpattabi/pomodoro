@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Pomodoro.Model
 {
-    public class TimerDuration : ITimerDuration
+    public class ClockDuration : IClockDuration
     {
-        private static TimerDuration s_defaultTimerDuraton;
+        private static ClockDuration s_defaultClockDuraton;
 
-        public static TimerDuration Default
+        public static ClockDuration Default
         {
             get 
             {
-                if (s_defaultTimerDuraton == null)
-                    s_defaultTimerDuraton = new TimerDuration();
+                if (s_defaultClockDuraton == null)
+                    s_defaultClockDuraton = new ClockDuration();
 
-                return s_defaultTimerDuraton;
+                return s_defaultClockDuraton;
             }
         }
 
@@ -28,21 +28,21 @@ namespace Pomodoro.Model
             public static TimeSpan Fifteen = new TimeSpan(hours: 0, minutes: 15, seconds: 0);
         }
 
-        public TimerDuration()
+        public ClockDuration()
             : this( FixedDuration.TwentyFive,
                     FixedDuration.Five,
                     FixedDuration.Fifteen)
         {
         }
                                 
-        public TimerDuration(int workDuration, int shortBreak, int longBreak)
+        public ClockDuration(int workDuration, int shortBreak, int longBreak)
             : this( new TimeSpan(hours: 0, minutes: workDuration, seconds: 0),
                     new TimeSpan(hours: 0, minutes: shortBreak, seconds: 0),
                     new TimeSpan(hours: 0, minutes: longBreak, seconds: 0))
         {
         }
 
-        private TimerDuration(TimeSpan workDuration, TimeSpan shortBreak, TimeSpan longBreak)
+        private ClockDuration(TimeSpan workDuration, TimeSpan shortBreak, TimeSpan longBreak)
         {
             this.WorkDuration = workDuration;
             this.ShortBreak = shortBreak;
