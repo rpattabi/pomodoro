@@ -116,16 +116,16 @@ namespace Pomodoro.Tests
         [Test]
         public void RaiseWorkingEvent_EveryMillisecond_OnStartingWork()
         {
-            IClock clock = new Pomodoro.Model.Clock(_testDuration); // WorkDuration = 2ms
-
             int eventCount = 0;
-            clock.Working += (sender, e) =>
-                {
-                    eventCount++;
-                };
 
-            clock.StartWork();
-            System.Threading.Thread.Sleep(50); // milliseconds
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // WorkDuration = 2ms
+                clock.Working += (sender, e) => { eventCount++; };
+                clock.StartWork();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test);
             Assert.AreEqual(2, eventCount);
         }
     }

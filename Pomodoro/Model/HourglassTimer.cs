@@ -10,29 +10,30 @@ namespace Pomodoro.Model
 {
     class HourglassTimer : IDisposable
     {
-        private System.Threading.Timer _timer;
-        private Dispatcher _dispatcher;
+        private DispatcherTimer _timer;
 
         public HourglassTimer(TimeSpan duration, int interval_ms)
         {
             this.Duration = duration;
             this.Interval_ms = interval_ms;
 
-            _timer = new Timer( OnTick, state: null, 
-                                dueTime: Timeout.Infinite, period: Timeout.Infinite);
+            _timer = new DispatcherTimer(DispatcherPriority.Send)  // Highest priority
+            { 
+                Interval = TimeSpan.FromMilliseconds(1)  // Tick every millisecond
+            };
 
-            //_dispatcher = Dispatcher.CurrentDispatcher;
+            _timer.Tick += _timer_Tick;
         }
 
         public void Start()
         {
             this.Elapsed_ms = 0;
-            _timer.Change(dueTime: 0, period: 1); // starts timer. signals every millisecond
+            _timer.Start();
         }
 
         public void Stop()
         {
-            _timer.Change(dueTime: Timeout.Infinite, period: Timeout.Infinite); // stops timer
+            _timer.Stop();
 
             if (Stopped != null)
                 Stopped(this);
@@ -42,7 +43,7 @@ namespace Pomodoro.Model
         public int Interval_ms { get; private set; }
         public int Elapsed_ms { get; private set; }
 
-        private void OnTick(object state)
+        private void _timer_Tick(object sender, EventArgs e)
         {
             //_dispatcher.BeginInvoke(new Action(()=>
             //    {
@@ -99,7 +100,7 @@ namespace Pomodoro.Model
                 // free managed resources
                 if (_timer != null)
                 {
-                    _timer.Dispose();
+                    //_timer.Dispose();
                     _timer = null;
                 }
             }
