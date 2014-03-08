@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomodoro", "Pomodoro.csproj", "{4F519DF7-B63C-4B94-8102-5ED1B61D0009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomodoroTests", "..\PomodoroTests\PomodoroTests.csproj", "{F84B4186-A4BF-4083-AF35-907C724B4439}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomodoro.Tests", "..\Pomodoro.Tests\Pomodoro.Tests.csproj", "{F84B4186-A4BF-4083-AF35-907C724B4439}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42FFBEBA-6E45-4533-9265-C9EE563C148B}"
 	ProjectSection(SolutionItems) = preProject

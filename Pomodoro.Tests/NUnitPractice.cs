@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace PomodoroTests
+namespace Pomodoro.Tests
 {
     [TestFixture]
-    public class NUnitPractice
+    class NUnitPractice
     {
         [Test]
         public void SumOfTwoNumbers()
@@ -19,7 +19,7 @@ namespace PomodoroTests
         [Test]
         public void SumOfTwoNumbers2()
         {
-            Assert.AreEqual(10, 5 + 4);
+            Assert.AreEqual(9, 5 + 4);
         }
     }
 }
