@@ -10,7 +10,7 @@ using Pomodoro.Model;
 namespace Pomodoro.Tests.Model
 {
     [TestFixture]
-    class Timer
+    class TimerDuration
     {
         [Test]
         public void Defaults_ShouldBe_25_5_15()

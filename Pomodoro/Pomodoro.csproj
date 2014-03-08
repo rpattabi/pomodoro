@@ -70,7 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\IClock.cs" />
     <Compile Include="Model\ITimerDuration.cs" />
+    <Compile Include="Model\Clock.cs" />
     <Compile Include="Model\TimerDuration.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

@@ -8,9 +8,17 @@ namespace Pomodoro.Model
 {
     public class TimerDuration : ITimerDuration
     {
+        private static TimerDuration s_defaultTimerDuraton;
+
         public static TimerDuration Default
         {
-            get { return new TimerDuration(); }
+            get 
+            {
+                if (s_defaultTimerDuraton == null)
+                    s_defaultTimerDuraton = new TimerDuration();
+
+                return s_defaultTimerDuraton;
+            }
         }
 
         public class FixedDuration
