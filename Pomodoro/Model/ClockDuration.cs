@@ -35,14 +35,16 @@ namespace Pomodoro.Model
         {
         }
                                 
-        public ClockDuration(int workDuration, int shortBreak, int longBreak)
-            : this( new TimeSpan(hours: 0, minutes: workDuration, seconds: 0),
-                    new TimeSpan(hours: 0, minutes: shortBreak, seconds: 0),
-                    new TimeSpan(hours: 0, minutes: longBreak, seconds: 0))
+        public ClockDuration(   int workDuration_minutes, 
+                                int shortBreak_minutes, 
+                                int longBreak_minutes)
+            : this( new TimeSpan(hours: 0, minutes: workDuration_minutes, seconds: 0),
+                    new TimeSpan(hours: 0, minutes: shortBreak_minutes, seconds: 0),
+                    new TimeSpan(hours: 0, minutes: longBreak_minutes, seconds: 0))
         {
         }
 
-        private ClockDuration(TimeSpan workDuration, TimeSpan shortBreak, TimeSpan longBreak)
+        internal ClockDuration(TimeSpan workDuration, TimeSpan shortBreak, TimeSpan longBreak)
         {
             this.WorkDuration = workDuration;
             this.ShortBreak = shortBreak;
@@ -52,5 +54,7 @@ namespace Pomodoro.Model
         public TimeSpan WorkDuration { get; set; }
         public TimeSpan ShortBreak { get; set; }
         public TimeSpan LongBreak { get; set; }
+
+
     }
 }

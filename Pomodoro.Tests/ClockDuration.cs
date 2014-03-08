@@ -25,9 +25,9 @@ namespace Pomodoro.Tests.Model
         [Test]
         public void OverridingDefaults_Allowed_AtConstruction()
         {
-            IClockDuration duration = new Pomodoro.Model.ClockDuration(workDuration: 20,
-                                                    shortBreak: 4,
-                                                    longBreak: 25);
+            IClockDuration duration = new Pomodoro.Model.ClockDuration(workDuration_minutes: 20,
+                                                    shortBreak_minutes: 4,
+                                                    longBreak_minutes: 25);
 
             Assert.AreEqual(20, duration.WorkDuration.Minutes);
             Assert.AreEqual(4, duration.ShortBreak.Minutes);

@@ -12,6 +12,14 @@ namespace Pomodoro.Tests
     [TestFixture]
     class Clock
     {
+        private TimeSpan _testDuration_2ms = new TimeSpan(  days: 0, hours: 0, minutes: 0, seconds: 0, 
+                                                        milliseconds: 2);
+
+        [SetUp]
+        public void SetUp()
+        {
+        }
+
         [Test]
         public void DefaultDuration_ShouldBe_DefaultOfClockDuration()
         {
@@ -22,7 +30,7 @@ namespace Pomodoro.Tests
         [Test]
         public void OverridingDuration_Allowed_DuringConstruction()
         {
-            IClockDuration duration = new ClockDuration(workDuration: 20, shortBreak: 4, longBreak: 10);
+            IClockDuration duration = new ClockDuration(workDuration_minutes: 20, shortBreak_minutes: 4, longBreak_minutes: 10);
             IClock clock = new Pomodoro.Model.Clock(duration);
 
             Assert.AreSame(duration, clock.Duration);
@@ -83,6 +91,24 @@ namespace Pomodoro.Tests
             clock.StartLongBreak();
             clock.Stop();
             Assert.AreEqual(Mode.Idle, clock.Mode);
+        }
+
+        [Test]
+        public void RaiseWorkStartedEvent_OnStartingWork()
+        {
+            IClockDuration duration = new ClockDuration(_testDuration_2ms,
+                                                        _testDuration_2ms,
+                                                        _testDuration_2ms);
+            IClock clock = new Pomodoro.Model.Clock(duration);
+
+            bool eventReceived = false;
+            clock.WorkStarted += (sender, e) =>
+                {
+                    eventReceived = true;
+                };
+
+            clock.StartWork();
+            Assert.IsTrue(eventReceived);
         }
     }
 }

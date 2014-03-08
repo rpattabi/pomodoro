@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pomodoro.Model
 {
+    public delegate void WorkStartedHandler(object sender, WorkStartedHandlerArgs e);
+    public class WorkStartedHandlerArgs : EventArgs {}
+
     public interface IClock
     {
         IClockDuration Duration { get; set; }
@@ -14,8 +17,9 @@ namespace Pomodoro.Model
         void StartWork();
         void StartShortBreak();
         void StartLongBreak();
-
         void Stop();
+
+        event WorkStartedHandler WorkStarted;
     }
 
     public enum Mode

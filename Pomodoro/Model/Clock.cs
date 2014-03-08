@@ -25,6 +25,9 @@ namespace Pomodoro.Model
         public void StartWork()
         {
             this.Mode = Mode.Work;
+
+            if (WorkStarted != null)
+                WorkStarted(this, new WorkStartedHandlerArgs());
         }
 
         public void StartShortBreak()
@@ -41,5 +44,7 @@ namespace Pomodoro.Model
         {
             this.Mode = Mode.Idle;
         }
+
+        public event WorkStartedHandler WorkStarted;
     }
 }
