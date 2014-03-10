@@ -324,7 +324,6 @@ namespace Pomodoro.Tests
             Assert.AreEqual((int)_testDuration.LongBreak.TotalMilliseconds - elapsed_ms, remaining_ms);
         }
 
-
         [Test]
         public void RaiseStoppedEvent_AfterLongBreakElapsed()
         {
@@ -342,5 +341,67 @@ namespace Pomodoro.Tests
 		}
 
 		#endregion
+
+        [Test]
+        public void Stop_PriorToStartingAgain()
+		{
+			bool begin = true; // at the beginning, stopped will be false and its okay.
+			bool stopped = false;
+
+			bool workStarted = false;
+			bool shortBreakStarted = false;
+			bool longBreakStarted = false;
+
+			Action test = () =>
+			{
+				IClock clock = new Pomodoro.Model.Clock(_testDuration);
+
+                clock.Stopped += (sender, e) => { stopped = true; };
+				clock.WorkStarted += (sender, e) =>
+				{
+					if (begin)
+						begin = false;
+                    else
+                        Assert.IsTrue(stopped);
+
+					workStarted = true;
+					stopped = false;
+				};
+				clock.ShortBreakStarted += (sender, e) =>
+				{
+					if (begin)
+						begin = false;
+                    else
+                        Assert.IsTrue(stopped);
+
+					shortBreakStarted = true;
+					stopped = false;
+				};
+				clock.LongBreakStarted += (sender, e) =>
+				{
+					if (begin)
+						begin = false;
+                    else
+                        Assert.IsTrue(stopped);
+
+					longBreakStarted = true;
+					stopped = false;
+				};
+
+				clock.StartWork();
+				clock.StartShortBreak();
+				clock.StartLongBreak();
+				clock.StartWork();
+				clock.StartLongBreak();
+				clock.StartShortBreak();
+				clock.StartWork();
+				clock.Stop();
+			};
+
+			DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+			Assert.IsTrue(workStarted);
+			Assert.IsTrue(shortBreakStarted);
+			Assert.IsTrue(longBreakStarted);
+        }
 	}
 }
