@@ -403,5 +403,17 @@ namespace Pomodoro.Tests
 			Assert.IsTrue(shortBreakStarted);
 			Assert.IsTrue(longBreakStarted);
         }
+
+        [Test]
+        public void Stopping_MultipleTimes_Allowed()
+		{
+			IClock clock = new Pomodoro.Model.Clock();
+			clock.Stop();
+			Assert.AreEqual(Mode.Idle, clock.Mode);
+			clock.Stop();
+			Assert.AreEqual(Mode.Idle, clock.Mode);
+			clock.Stop();
+			Assert.AreEqual(Mode.Idle, clock.Mode);
+        }
 	}
 }
