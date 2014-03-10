@@ -97,7 +97,9 @@ namespace Pomodoro.Tests
             Assert.AreEqual(Mode.Idle, clock.Mode);
         }
 
-        [Test]
+		#region Work
+
+		[Test]
         public void RaiseWorkStartedEvent_OnStartingWork()
         {
             IClock clock = new Pomodoro.Model.Clock(_testDuration);
@@ -173,6 +175,172 @@ namespace Pomodoro.Tests
 
             DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
             Assert.IsTrue(eventRaised);
+		}
+
+		#endregion
+
+		#region ShortBreak
+
+		[Test]
+        public void RaiseShortBreakStartedEvent_OnStartingShortBreak()
+        {
+            IClock clock = new Pomodoro.Model.Clock(_testDuration);
+
+            bool eventReceived = false;
+            clock.ShortBreakStarted += (sender, e) =>
+                {
+                    eventReceived = true;
+                };
+
+            clock.StartShortBreak();
+            Assert.IsTrue(eventReceived);
         }
-    }
+
+        [Test]
+        public void RaiseShortBreakingEvent_EveryMillisecond_OnStartingShortBreak()
+        {
+            int eventCount = 0;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // ShortBreak = 2ms
+                clock.ShortBreaking += (sender, e) => { eventCount++; };
+                clock.StartShortBreak();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.AreEqual(2, eventCount);
+        }
+
+        [Test]
+        public void ShortBreakingEvent_ShouldProvide_ElapsedAndRemainingTime()
+        {
+            int elapsed_ms = 0;
+            int remaining_ms = 0;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // ShortBreak = 2ms
+
+                bool firstTime = true;
+                clock.ShortBreaking += (sender, e) =>
+                {
+                    if (firstTime)
+                    {
+                        firstTime = false;
+
+                        elapsed_ms = e.Elapsed_ms;
+                        remaining_ms = e.Remaining_ms;
+                    }
+                };
+
+                clock.StartShortBreak();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.AreEqual(1, elapsed_ms);
+            Assert.AreEqual((int)_testDuration.ShortBreak.TotalMilliseconds - elapsed_ms, remaining_ms);
+        }
+
+
+        [Test]
+        public void RaiseStoppedEvent_AfterShortBreakElapsed()
+        {
+            bool eventRaised = false;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // ShortBreak = 2ms
+                clock.Stopped += (sender, e) => { eventRaised = true; };
+                clock.StartShortBreak();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.IsTrue(eventRaised);
+		}
+
+		#endregion
+
+		#region LongBreak
+
+		[Test]
+        public void RaiseLongBreakStartedEvent_OnStartingLongBreak()
+        {
+            IClock clock = new Pomodoro.Model.Clock(_testDuration);
+
+            bool eventReceived = false;
+            clock.LongBreakStarted += (sender, e) =>
+                {
+                    eventReceived = true;
+                };
+
+            clock.StartLongBreak();
+            Assert.IsTrue(eventReceived);
+        }
+
+        [Test]
+        public void RaiseLongBreakingEvent_EveryMillisecond_OnStartingLongBreak()
+        {
+            int eventCount = 0;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // LongBreak = 2ms
+                clock.LongBreaking += (sender, e) => { eventCount++; };
+                clock.StartLongBreak();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.AreEqual(2, eventCount);
+        }
+
+        [Test]
+        public void LongBreakingEvent_ShouldProvide_ElapsedAndRemainingTime()
+        {
+            int elapsed_ms = 0;
+            int remaining_ms = 0;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // LongBreak = 2ms
+
+                bool firstTime = true;
+                clock.LongBreaking += (sender, e) =>
+                {
+                    if (firstTime)
+                    {
+                        firstTime = false;
+
+                        elapsed_ms = e.Elapsed_ms;
+                        remaining_ms = e.Remaining_ms;
+                    }
+                };
+
+                clock.StartLongBreak();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.AreEqual(1, elapsed_ms);
+            Assert.AreEqual((int)_testDuration.LongBreak.TotalMilliseconds - elapsed_ms, remaining_ms);
+        }
+
+
+        [Test]
+        public void RaiseStoppedEvent_AfterLongBreakElapsed()
+        {
+            bool eventRaised = false;
+
+            Action test = () =>
+            {
+                IClock clock = new Pomodoro.Model.Clock(_testDuration); // LongBreak = 2ms
+                clock.Stopped += (sender, e) => { eventRaised = true; };
+                clock.StartLongBreak();
+            };
+
+            DispatcherHelper.ExecuteOnDispatcherThread(test, millisecondsToWait: 20);
+            Assert.IsTrue(eventRaised);
+		}
+
+		#endregion
+	}
 }

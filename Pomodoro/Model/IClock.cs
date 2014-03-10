@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Pomodoro.Model
 {
-    public delegate void WorkStartedHandler(object sender, WorkStartedHandlerArgs e);
-    public class WorkStartedHandlerArgs : EventArgs {}
-
     public delegate void ClockRunningHandler(object sender, ClockRunningHandlerArgs e);
 
     public class ClockRunningHandlerArgs : EventArgs 
@@ -27,8 +24,13 @@ namespace Pomodoro.Model
         void StartLongBreak();
         void Stop();
 
-        event WorkStartedHandler WorkStarted;
+        event EventHandler WorkStarted;
         event ClockRunningHandler Working;
+        event EventHandler ShortBreakStarted;
+        event ClockRunningHandler ShortBreaking;
+        event EventHandler LongBreakStarted;
+        event ClockRunningHandler LongBreaking;
+
         event EventHandler Stopped;
     }
 
