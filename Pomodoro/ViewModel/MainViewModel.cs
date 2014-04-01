@@ -10,7 +10,7 @@ namespace Pomodoro.ViewModel
 	/// </summary>
 	public sealed class MainViewModel : ViewModelBase
 	{
-		private IClock Clock { get; set; }
+		internal IClock Clock { get; set; }
 		private Mode _modeBeforeLastStop;
 		private uint _pomodorosBeforeLongBreak;
 
@@ -91,6 +91,11 @@ namespace Pomodoro.ViewModel
 		private void Clock_WorkStarted(object sender, System.EventArgs e)
 		{
 		}
+
+        public Mode Mode
+		{
+			get { return this.Clock.Mode; }
+        }
 
         public void Start()
 		{

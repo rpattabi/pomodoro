@@ -55,7 +55,7 @@ namespace Pomodoro.Model
                     Tick(this, new TickEventArgs() { Elapsed_ms = this.Elapsed_ms });
             }
 
-            if (this.Elapsed_ms == this.Duration.TotalMilliseconds)
+            if (this.Elapsed_ms >= this.Duration.TotalMilliseconds)
             {
                 Stop();
             }

@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 using Pomodoro.Model;
 
-namespace Pomodoro.Tests
+namespace Pomodoro.Tests.Model
 {
     [TestFixture]
     class Clock
@@ -19,22 +19,22 @@ namespace Pomodoro.Tests
         [SetUp]
         public void SetUp()
         {
-            _testDuration = new ClockDuration(  workDuration: _testTimeSpan_2ms, 
-                                                shortBreak: _testTimeSpan_2ms,
-                                                longBreak: _testTimeSpan_2ms);
+            _testDuration = new Pomodoro.Model.ClockDuration(  workDuration: _testTimeSpan_2ms, 
+                                                                shortBreak: _testTimeSpan_2ms,
+                                                                longBreak: _testTimeSpan_2ms);
         }
 
         [Test]
         public void DefaultDuration_ShouldBe_DefaultOfClockDuration()
         {
             IClock clock = new Pomodoro.Model.Clock();
-            Assert.AreSame(ClockDuration.Default, clock.Duration);
+            Assert.AreSame(Pomodoro.Model.ClockDuration.Default, clock.Duration);
         }
 
         [Test]
         public void OverridingDuration_Allowed_DuringConstruction()
         {
-            IClockDuration duration = new ClockDuration(workDuration_minutes: 20, shortBreak_minutes: 4, longBreak_minutes: 10);
+            IClockDuration duration = new Pomodoro.Model.ClockDuration(workDuration_minutes: 20, shortBreak_minutes: 4, longBreak_minutes: 10);
             IClock clock = new Pomodoro.Model.Clock(duration);
 
             Assert.AreSame(duration, clock.Duration);
