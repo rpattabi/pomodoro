@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Height="300"
-        Width="300"
-        Title="MVVM Light Application"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        Height="73"
+        Width="177"
+        Title="Pomodoro" 
+        ResizeMode="NoResize">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -19,5 +19,7 @@
     </Window.Resources>
 
     <Grid x:Name="LayoutRoot">
-    </Grid>
+		<Button Content="{Binding TimeRemaining, StringFormat='{}mm:ss]'}" 
+				Click="Button_Click"/>
+	</Grid>
 </Window>
