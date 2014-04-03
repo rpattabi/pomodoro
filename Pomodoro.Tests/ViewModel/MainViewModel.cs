@@ -34,6 +34,7 @@ namespace Pomodoro.Tests.ViewModel
 			vm.Clock.Stop();
         }
 
+        /*
         [Test]
         public void StartingAfterWorking_ShouldStartShortBreak()
 		{
@@ -44,5 +45,6 @@ namespace Pomodoro.Tests.ViewModel
 			Assert.AreEqual(Mode.ShortBreak, vm.Mode); // Expecting clock to be in working mode still
 			vm.Clock.Stop();
         }
+        */
 	}
 }

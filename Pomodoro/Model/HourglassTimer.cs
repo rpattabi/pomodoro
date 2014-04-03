@@ -33,7 +33,7 @@ namespace Pomodoro.Model
 
         public void Stop()
         {
-            if (!_timer.IsEnabled) return; // Stop only when the timer is running
+			if (!this.IsRunning) return;
 
             _timer.Stop();
 
@@ -44,6 +44,7 @@ namespace Pomodoro.Model
         public TimeSpan Duration { get; private set; }
         public int Interval_ms { get; private set; }
         public int Elapsed_ms { get; private set; }
+        public bool IsRunning { get { return _timer.IsEnabled; } }
 
         private void _timer_Tick(object sender, EventArgs e)
         {

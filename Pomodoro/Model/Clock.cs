@@ -23,6 +23,16 @@ namespace Pomodoro.Model
 
         public IClockDuration Duration { get; set; }
         public Mode Mode { get; private set; }
+		public bool IsRunning 
+		{ 
+			get 
+			{
+				if (_runningHourglassTimer == null)
+					return false;
+
+				return _runningHourglassTimer.IsRunning; 
+			}
+		}
 
         public void StartWork()
         {

@@ -97,6 +97,36 @@ namespace Pomodoro.Tests.Model
             Assert.AreEqual(Mode.Idle, clock.Mode);
         }
 
+        [Test]
+        public void IsRunning_ReturnsTrue_OnlyWhenRunning()
+		{
+            IClock clock = new Pomodoro.Model.Clock(_testDuration);
+
+			clock.StartWork();
+			Assert.IsTrue(clock.IsRunning);
+			clock.Stop();
+			Assert.IsFalse(clock.IsRunning);
+
+			clock.StartShortBreak();
+			Assert.IsTrue(clock.IsRunning);
+			clock.Stop();
+			Assert.IsFalse(clock.IsRunning);
+
+			clock.StartLongBreak();
+			Assert.IsTrue(clock.IsRunning);
+			clock.Stop();
+			Assert.IsFalse(clock.IsRunning);
+        }
+
+        [Test]
+        public void IdleMode_OnDurationElapseOfAnyMode()
+		{
+            IClock clock = new Pomodoro.Model.Clock(_testDuration);
+
+			clock.StartWork();
+			//while (clock.IsRunning) ;
+        }
+
 		#region Work
 
 		[Test]

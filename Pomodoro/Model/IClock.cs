@@ -18,6 +18,7 @@ namespace Pomodoro.Model
     {
         IClockDuration Duration { get; set; }
         Mode Mode { get; }
+		bool IsRunning { get; }
 
         void StartWork();
         void StartShortBreak();
